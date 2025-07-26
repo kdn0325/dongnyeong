@@ -5,6 +5,7 @@ import React from "react";
 import { buttonVariants } from "./ui/button";
 import { Icons } from "./Icons";
 import Nav from "./Nav";
+import MobileNav from "./MobileNav";
 
 export default function Header() {
   return (
@@ -21,13 +22,14 @@ export default function Header() {
               <div
                 className={cn(
                   buttonVariants({ variant: "ghost" }),
-                  "w-10 px-0"
+                  "w-10 px-0 hidden sm:inline-flex"
                 )}
               >
                 <Icons.github className="h-4 w-4" />
                 <span className="sr-only">Github</span>
               </div>
             </Link>
+            <MobileNav />
           </nav>
         </div>
       </div>
