@@ -46,7 +46,7 @@ export default defineConfig({
           behavior: "wrap",
           properties: {
             className: ["subheading-anchor"],
-            arialLabel: "Link to section",
+            ariaLabel: "섹션 바로가기",
           },
         },
       ],
