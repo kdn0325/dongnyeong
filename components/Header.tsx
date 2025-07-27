@@ -6,6 +6,7 @@ import { Icons } from "./Icons";
 import Nav from "./Nav";
 import ModeToggle from "./ModeToggle";
 import MobileNav from "./MobileNav";
+import ModeToggle from "./ModeToggle";
 
 export function Header() {
   return (
