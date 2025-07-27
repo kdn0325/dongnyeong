@@ -6,6 +6,7 @@ import { buttonVariants } from "./ui/button";
 import { Icons } from "./Icons";
 import Nav from "./Nav";
 import MobileNav from "./MobileNav";
+import ModeToggle from "./ModeToggle";
 
 export default function Header() {
   return (
@@ -29,6 +30,7 @@ export default function Header() {
                 <span className="sr-only">Github</span>
               </div>
             </Link>
+            <ModeToggle />
             <MobileNav />
           </nav>
         </div>

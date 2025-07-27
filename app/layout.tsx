@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
+import { Provider } from "@/components/Provider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -17,17 +18,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko" suppressHydrationWarning>
       <body
         className={
           (cn("min-h-screen bg-background font-sans antialiased"),
           inter.variable)
         }
       >
-        <div className="relative flex min-h-dvh flex-col bg-background">
-          <Header />
-          <main className="flex-1">{children}</main>
-        </div>
+        <Provider>
+          <div className="relative flex min-h-dvh flex-col bg-background">
+            <Header />
+            <main className="flex-1">{children}</main>
+          </div>
+        </Provider>
       </body>
     </html>
   );
