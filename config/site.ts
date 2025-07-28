@@ -1,10 +1,10 @@
 export const siteConfig = {
-  name: "dongnyeong",
+  name: "데브핑의 블로그",
   url: "https://dongnyeong.com",
-  description: "test",
+  description: "Dongnyeong's Dev Blog",
   author: "DongNyeong",
   link: {
-    github: "github.com/kdn0325",
+    github: "https://github.com/kdn0325",
   },
 };
 
