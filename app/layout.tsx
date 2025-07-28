@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Header } from "@/components/Header";
 import { Provider } from "@/components/Provider";
 import { siteConfig } from "@/config/site";
+import { Footer } from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 // 사이트 메타데이터 설정, 환경변수나 siteConfig로부터 기본 URL 사용
@@ -38,6 +39,7 @@ export default function RootLayout({
           <div className="relative flex min-h-dvh flex-col bg-background">
             <Header />
             <main className="flex-1">{children}</main>
+            <Footer />
           </div>
         </Provider>
       </body>
