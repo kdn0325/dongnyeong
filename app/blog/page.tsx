@@ -37,11 +37,11 @@ export default async function BlogPage({ searchParams }: Props) {
       {/* 헤더 섹션 */}
       <section className="mb-10">
         <div className="space-y-2 text-center md:text-left">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
-            Dongnyeong's Dev Blog
+          <h1 className="text-2xl font-extrabold tracking-tight lg:text-3xl">
+            데브핑의 블로그
           </h1>
           <p className="text-muted-foreground text-lg">
-            단순히 내가 배운걸 다시 잊어버리지 않기 위해 그냥 적어놓습니다.
+            그냥 개발하면서 느낀 거 주저리주저리 적는 곳
           </p>
         </div>
       </section>
