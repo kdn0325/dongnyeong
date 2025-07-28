@@ -1,0 +1,31 @@
+---
+title: "EACCES: permission denied, unlink '/usr/local/bin/code' 해결 방법 (Mac)"
+description: "EACCES: permission denied, unlink '/usr/local/bin/code' 해결 방법 (Mac)"
+
+date: 2025-02-26
+published: true
+tags:
+  [
+    " refer",
+    " etc",
+    " vscode",
+    " .code",
+    " permission denied, unlink '/usr/local/bin/code' 에러 해결 방법 (Mac)",
+  ]
+---
+
+### 1. VScode 키고 .code 명령어를 입력하면 vscode가 열려야 하는데 안열릴때 해결 방법
+
+VScode에서 "shell command install 'code' command in path"를 했을때 EACCES: permission denied, unlink '/usr/local/bin/code'가 나온다
+
+```sh
+EACCES: permission denied, unlink '/usr/local/bin/code'
+```
+
+### 2. 터미널 키고 아래 명령어 실행
+
+```sh
+sudo rm -rf /usr/local/bin/code
+```
+
+### 3. 맥북 비밀번호를 입력해주면 바로 작동한다
