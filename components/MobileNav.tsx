@@ -7,7 +7,6 @@ import { Menu } from "lucide-react";
 import Link, { LinkProps } from "next/link";
 import { Icons } from "./Icons";
 import { siteConfig } from "@/config/site";
-import { useRouter } from "next/navigation";
 
 export default function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -59,7 +58,6 @@ function MobileLink({
   children,
   ...props
 }: MobileLinkProps) {
-  const router = useRouter();
   return (
     <Link
       href={href}
