@@ -1,0 +1,112 @@
+---
+title: Multiple command produce 에러
+description: Multiple command produce 에러
+date: 2023-10-12
+published: true
+tags: [" [issue, react-native, Xcode, issues, Multiple command produce, 에러]"]
+---
+
+
+---
+
+* this ordered seed list will be replaced by the toc 
+
+## 버전
+
+```bash
+System:
+OS: macOS 13.4.1
+CPU: (10) arm64 Apple M2 Pro
+Memory: 89.41 MB / 16.00 GB
+Shell:
+version: "5.9"
+path: /bin/zsh
+Binaries:
+Node:
+version: 18.15.0
+path: /usr/local/bin/node
+Yarn:
+version: 1.22.19
+path: /opt/homebrew/bin/yarn
+npm:
+version: 9.5.0
+path: /usr/local/bin/npm
+Watchman:
+version: 2023.07.24.00
+path: /opt/homebrew/bin/watchman
+Managers:
+CocoaPods:
+version: 1.13.0
+path: /Users/abel/.gem/bin/pod
+SDKs:
+iOS SDK:
+Platforms:
+- DriverKit 22.4
+- iOS 16.4
+- macOS 13.3
+- tvOS 16.4
+- watchOS 9.4
+Android SDK: Not Found
+IDEs:
+Android Studio: 2022.1 AI-221.6008.13.2211.9619390
+Xcode:
+version: 14.3.1/14E300c
+path: /usr/bin/xcodebuild
+Languages:
+Java:
+version: 11.0.11
+path: /usr/bin/javac
+Ruby:
+version: 2.7.4
+path: /Users/abel/.rbenv/shims/ruby
+npmPackages:
+"@react-native-community/cli": Not Found
+react:
+installed: 18.2.0
+wanted: 18.2.0
+react-native:
+installed: 0.72.5
+wanted: 0.72.5
+react-native-macos: Not Found
+npmGlobalPackages:
+"*react-native*": Not Found
+Android:
+hermesEnabled: true
+newArchEnabled: false
+iOS:
+hermesEnabled: true
+newArchEnabled: false
+```
+
+---
+
+---
+
+## 에러 코드
+
+```swift
+Showing All Errors Only Multiple commands produce
+'/Users/user/Library/Developer/Xcode/DerivedData/app-apznixaokmiptdbeujrbmpneowhk/
+Build/Products/Debug-iphoneos/app.app/FontAwesome.ttf’
+```
+
+---
+
+---
+
+## 발생 원인
+
+**Xcode build 에러 :**
+
+**'react-native-vector-icons'를 사용할 때 'Copy Bundle Resources'에 폰트가 중복됌**
+
+---
+
+---
+
+## 해결 방법
+
+1. **Xcode** 실행
+2. 탭 메뉴 중 **'Build Phases’**
+3. **'Copy Bundle Resources'** 항목에서 중복되는 리소스들을 제거
+4. 다시 **npx react-native run-ios**

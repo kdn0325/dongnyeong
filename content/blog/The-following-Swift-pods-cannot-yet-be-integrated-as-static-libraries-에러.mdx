@@ -1,0 +1,111 @@
+---
+title: "The following Swift pods cannot yet be integrated as static libraries: 에러"
+description: "The following Swift pods cannot yet be integrated as static libraries: 에러"
+date: 2023-10-13
+published: true
+tags: ["The following Swift pods cannot yet be integrated as static libraries"]
+---
+
+## 버전
+
+```bash
+System:
+OS: macOS 13.4.1
+CPU: (10) arm64 Apple M2 Pro
+Memory: 89.41 MB / 16.00 GB
+Shell:
+version: "5.9"
+path: /bin/zsh
+Binaries:
+Node:
+version: 18.15.0
+path: /usr/local/bin/node
+Yarn:
+version: 1.22.19
+path: /opt/homebrew/bin/yarn
+npm:
+version: 9.5.0
+path: /usr/local/bin/npm
+Watchman:
+version: 2023.07.24.00
+path: /opt/homebrew/bin/watchman
+Managers:
+CocoaPods:
+version: 1.13.0
+path: /Users/abel/.gem/bin/pod
+SDKs:
+iOS SDK:
+Platforms:
+- DriverKit 22.4
+- iOS 16.4
+- macOS 13.3
+- tvOS 16.4
+- watchOS 9.4
+Android SDK: Not Found
+IDEs:
+Android Studio: 2022.1 AI-221.6008.13.2211.9619390
+Xcode:
+version: 14.3.1/14E300c
+path: /usr/bin/xcodebuild
+Languages:
+Java:
+version: 11.0.11
+path: /usr/bin/javac
+Ruby:
+version: 2.7.4
+path: /Users/abel/.rbenv/shims/ruby
+npmPackages:
+"@react-native-community/cli": Not Found
+react:
+installed: 18.2.0
+wanted: 18.2.0
+react-native:
+installed: 0.72.5
+wanted: 0.72.5
+react-native-macos: Not Found
+npmGlobalPackages:
+"*react-native*": Not Found
+Android:
+hermesEnabled: true
+newArchEnabled: false
+iOS:
+hermesEnabled: true
+newArchEnabled: false
+```
+
+---
+
+---
+
+## 에러 코드
+
+```bash
+[!] The following Swift pods cannot yet be integrated as static libraries:
+
+The Swift pod `FirebaseCoreInternal` depends upon `GoogleUtilities`, which does not define modules. To opt into those targets generating module maps (which is necessary to import them from Swift when building as static libraries), you may set `use_modular_headers!` globally in your Podfile, or specify `:modular_headers => true` for particular dependencies.
+```
+
+---
+
+---
+
+## 발생 원인
+
+**Firebase 추가 후** `pod install` **에러**
+
+---
+
+---
+
+## 해결
+
+1. ios/Podfile
+
+```bash
+config = use_native_modules!
+# 밑에 코드 추가 후
+pod 'GoogleUtilities', :modular_headers => true
+
+# pod install 다시 실행
+
+```

@@ -1,0 +1,100 @@
+---
+title: value is unavailable introduced in ios 12.0
+description: value is unavailable introduced in ios 12.0
+date: 2023-12-19
+published: true
+tags:
+  [
+    " issue,",
+    " react-native,",
+    " Xcode,",
+    " issues,",
+    " value is unavailable introduced in ios 12.0 에러,",
+    " 에러,",
+  ]
+---
+
+## 버전
+
+```bash
+System:
+OS: macOS 13.4.1
+CPU: (10) arm64 Apple M2 Pro
+Memory: 89.41 MB / 16.00 GB
+Shell:
+version: "5.9"
+path: /bin/zsh
+Binaries:
+Node:
+version: 18.15.0
+path: /usr/local/bin/node
+Yarn:
+version: 1.22.19
+path: /opt/homebrew/bin/yarn
+npm:
+version: 9.5.0
+path: /usr/local/bin/npm
+Watchman:
+version: 2023.07.24.00
+path: /opt/homebrew/bin/watchman
+Managers:
+CocoaPods:
+version: 1.13.0
+path: /Users/abel/.gem/bin/pod
+SDKs:
+iOS SDK:
+Platforms:
+- DriverKit 22.4
+- iOS 16.4
+- macOS 13.3
+- tvOS 16.4
+- watchOS 9.4
+Android SDK: Not Found
+IDEs:
+Android Studio: 2022.1 AI-221.6008.13.2211.9619390
+Xcode:
+version: 15.1.0/14E300c
+path: /usr/bin/xcodebuild
+Languages:
+Java:
+version: 11.0.11
+path: /usr/bin/javac
+Ruby:
+version: 2.7.6
+path: /Users/abel/.rbenv/shims/ruby
+npmPackages:
+"@react-native-community/cli": Not Found
+react:
+installed: 18.2.0
+wanted: 18.2.0
+react-native:
+installed: 0.72.5
+wanted: 0.72.5
+react-native-macos: Not Found
+npmGlobalPackages:
+"*react-native*": Not Found
+Android:
+hermesEnabled: true
+newArchEnabled: false
+iOS:
+hermesEnabled: true
+newArchEnabled: false
+```
+
+## 에러 코드
+
+```swift
+'value' is unavailable introduced in ios 12.0
+```
+
+## 발생 원인
+
+xcode 15.1 업데이트하고 나서 빌드했더니 Xcode에서 이런 에러가 발생
+
+## 해결 방법
+
+1. 해당 프로젝트의 node_modules/react-native/scripts/cocoapods/codegen_utils.rb 파일을 연다.
+2. 탭 메뉴 중 **'Build Phases’** 87줄에 있는 `'ios' => '11.0'`부분을 `'ios'=>'12.0'`으로 수정
+3. `npx patch-package react-native` 커맨드로 패치를 진행
+4. `pod install`
+5. 실행

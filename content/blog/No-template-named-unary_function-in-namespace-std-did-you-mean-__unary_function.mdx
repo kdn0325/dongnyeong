@@ -1,0 +1,80 @@
+---
+title: No template named 'unary_function' in namespace 'std'; did you mean '__unary_function'?
+description: No template named 'unary_function' in namespace 'std'; did you mean '__unary_function'?
+date: 2024-01-19
+published: true
+tags:
+  [
+    " issue,",
+    " react-native,",
+    " pod install,",
+    " issues,",
+    " No template named 'unary_function' in namespace 'std'; did you mean '__unary_function'",
+    " 에러,",
+  ]
+---
+
+## 버전
+
+```bash
+System:
+    OS: macOS 14.1.1
+    CPU: (10) arm64 Apple M2 Pro
+    Memory: 943.63 MB / 16.00 GB
+    Shell: 5.9 - /bin/zsh
+  Binaries:
+    Node: 20.10.0 - ~/.nvm/versions/node/v20.10.0/bin/node
+    Yarn: 1.22.19 - /opt/homebrew/bin/yarn
+    npm: 10.2.3 - ~/.nvm/versions/node/v20.10.0/bin/npm
+    Watchman: 2023.11.27.00 - /opt/homebrew/bin/watchman
+  Managers:
+    CocoaPods: 1.12.1 - /Users/abel/.gem/bin/pod
+  SDKs:
+    iOS SDK:
+      Platforms: DriverKit 23.2, iOS 17.2, macOS 14.2, tvOS 17.2, watchOS 10.2
+    Android SDK:
+      API Levels: 28, 29, 30, 31, 33, 33, 34
+      Build Tools: 28.0.3, 30.0.2, 30.0.3, 31.0.0, 33.0.0, 33.0.1, 33.0.2, 34.0.0
+      System Images: android-28 | Intel x86 Atom, android-28 | Intel x86_64 Atom, android-29 | Intel x86 Atom, android-29 | Intel x86_64 Atom, android-30 | Intel x86_64 Atom, android-30 | Google APIs Intel x86 Atom, android-30 | Google APIs Intel x86_64 Atom, android-31 | Intel x86_64 Atom, android-31 | Google APIs Intel x86_64 Atom, android-33-ext5 | Google Play Intel x86_64 Atom, android-33 | Google APIs ARM 64 v8a, android-33 | Google APIs Intel x86_64 Atom, android-34 | Google APIs ARM 64 v8a, android-34 | Google APIs Intel x86_64 Atom, android-34 | Google Play ARM 64 v8a
+      Android NDK: Not Found
+  IDEs:
+    Android Studio: 2022.1 AI-221.6008.13.2211.9619390
+    Xcode: 15.1/15C65 - /usr/bin/xcodebuild
+  Languages:
+    Java: 17.0.9 - /opt/homebrew/opt/openjdk@17/bin/javac
+  npmPackages:
+    @react-native-community/cli: Not Found
+    react: 18.2.0 => 18.2.0
+    react-native: 0.71.4 => 0.71.4
+    react-native-macos: Not Found
+  npmGlobalPackages:
+    *react-native*: Not Found
+```
+
+## 에러 코드
+
+```swift
+No template named 'unary_function' in namespace 'std'; did you mean '__unary_function'?
+```
+
+## 발생 원인
+
+- RN 프로젝트 clone 또는 새로운 PR 병합 시 발생
+
+## (1) : 해결 방법
+
+1. 해당 하는 프로젝트를 Xcode에서 fix 하면 해결
+
+## (2) : 해결 방법
+
+1. 해당 프로젝트의 Podfile을 열어서 해당 코드 추가
+
+```lua
+  post_install do |installer|
+      installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+          // 해당 코드 추가! > config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)', '_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION']
+        end
+      end
+  end
+```
