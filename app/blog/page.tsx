@@ -13,13 +13,12 @@ export const metadata: Metadata = {
 const POSTS_PER_PAGE = 5;
 
 interface Props {
-  searchParams: {
-    page?: string;
-  };
+  searchParams: Promise<{ page?: string }>;
 }
 
 export default async function BlogPage({ searchParams }: Props) {
-  const currentPage = Number(searchParams?.page) || 1;
+  const params = await searchParams;
+  const currentPage = Number(params?.page) || 1;
   //post.published true인 포스트만 필터링하고 최신순 정렬
   const sortedPosts = posts
     .filter((post) => post.published)
