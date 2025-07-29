@@ -83,7 +83,9 @@ export async function GET(req: NextRequest) {
       }
     );
   } catch (error) {
+    // TODO: 에러 예외 처리 필요시 추가하기
     // 이미지 생성 실패 시 500 에러 반환
+    console.error(error);
     return new Response("이미지를 생성하지 못했습니다", { status: 500 });
   }
 }
