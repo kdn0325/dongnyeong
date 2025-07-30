@@ -5,21 +5,20 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface Props {
-  params: {
-    slug: string[];
-  };
+  params: Promise<{ slug: string[] }>;
 }
 
 // URL 파라미터로부터 슬러그를 받아 해당하는 포스트를 반환하는 함수
-async function getPostFromParams(params: Props["params"]) {
-  const slug = params?.slug?.join("/");
+async function getPostFromParams(params: { slug: string[] }) {
+  const slug = params.slug.join("/");
   const post = posts.find((post) => post.slugAsParams === slug);
   return post;
 }
 
 // 각 포스트의 메타데이터를 동적으로 생성하는 함수
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await getPostFromParams(params);
+  const awaitedParams = await params; // params await
+  const post = await getPostFromParams(awaitedParams);
 
   if (!post) {
     return {};
@@ -40,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: post.slug,
       images: [
         {
-          url: `api/og?${ogSearchParams.toString}`,
+          url: `api/og?${ogSearchParams.toString()}`,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -51,13 +50,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // 정적 생성 시 필요한 모든 슬러그 경로를 반환하는 함수
-export async function generateStaticParams(): Promise<Props["params"][]> {
+export async function generateStaticParams(): Promise<
+  Array<{ slug: string[] }>
+> {
   return posts.map((post) => ({ slug: post.slugAsParams.split("/") }));
 }
 
 export default async function PostPage({ params }: Props) {
-  const post = await getPostFromParams(params);
+  const resolvedParams = await params;
+  const post = await getPostFromParams(resolvedParams);
   // 포스트가 없거나 공개되지 않은 경우 404 페이지로 이동
+
   if (!post || !post.published) {
     notFound();
   }
