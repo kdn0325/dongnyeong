@@ -3,7 +3,7 @@ title: next/router 사용하기
 description: next/router 사용하기
 date: 2022-09-26
 published: true
-tags: ["nextjs, ssr, ssg, 서버사이드 랜더링, next/router, router]"]
+tags: ["nextjs, ssr, ssg, 서버사이드 랜더링, next/router, router"]
 ---
 
 ### **next/router 사용하기**
@@ -12,11 +12,15 @@ router 객체에 접근하기 위해서 **useRouter**를 사용한다
 
 **1. import 후**
 
+```
 import { useRouter } from "next/router";
+```
 
 **2. 아래의 형태로 사용**
 
+```
 const router = useRouter()
+```
 
 ## **router object**
 
@@ -192,29 +196,41 @@ export default function Page() {
 
 next/router로 이벤트를 감지해서 특정 이벤트가 발생하면 함수를 실행
 
-**1. routeChangeStart**
+1. routeChangeStart
 
-**routeChangeStart(url, { shallow })** 경로가 변경되기 시작할때 발생
+```
+routeChangeStart(url, { shallow }) 경로가 변경되기 시작할때 발생
+```
 
-**2. routeChangeComplete**
+2. routeChangeComplete
 
-**routeChangeComplete(url, { shallow })** 경로가 완전히 변경되면 발생
+```
+routeChangeComplete(url, { shallow }) 경로가 완전히 변경되면 발생
+```
 
-**3. routeChangeError**
+3. routeChangeError
 
-**routeChangeError(url, { shallow })** 경로 변경시 오류가 발생하거나 경로 전환 취소시 발생 (err.cancelled - 탐색이 취소되었는지 여부)
+```
+routeChangeError(url, { shallow }) 경로 변경시 오류가 발생하거나 경로 전환 취소시 발생 (err.cancelled - 탐색이 취소되었는지 여부)
+```
 
-**4. beforeHistoryChange**
+4. beforeHistoryChange
 
-**beforeHistoryChange(url, { shallow })** 브라우저의 history를 변경하기 전에 발생
+```
+beforeHistoryChange(url, { shallow }) 브라우저의 history를 변경하기 전에 발생
+```
 
-**5. hashChangeStart**
+5. hashChangeStart
 
-**hashChangeStart(url, { shallow })** 해시는 변경되지만 페이지는 변경되지 않을때 발생
+```
+hashChangeStart(url, { shallow }) 해시는 변경되지만 페이지는 변경되지 않을때 발생
+```
 
-**6. hashChangeComplete**
+6. hashChangeComplete
 
-**hashChangeComplete(url, { shallow })** 해시가 변경되었지만 페이지는 변경되지 않을때 발생
+```
+hashChangeComplete(url, { shallow }) 해시가 변경되었지만 페이지는 변경되지 않을때 발생
+```
 
 ```jsx
 import { useEffect } from 'react'
@@ -245,7 +261,7 @@ export default function MyApp({ Component, pageProps }) {
 }
 ```
 
-## **withRouter**
+## withRouter
 
 라우터에 의해서 호출된 컴포넌트가 아니어도 match, location, history 객체에 접근할 수 있도록 해준다.
 
