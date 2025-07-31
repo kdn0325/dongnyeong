@@ -1,0 +1,110 @@
+---
+title: useMutation 개념과 삭제/ 업데이트 예제로 이해해보기
+description: useMutation 훅의 개념과 삭제/업데이트 예제를 바탕으로 한 실무 중심 정리
+date: 2025-07-31
+published: true
+tags: ["react-query", "useMutation", "mutation", "React"]
+---
+
+# `useMutation` 개념
+
+`useMutation`은 **React Query**에서 데이터를 조회(Get)(`useQuery`)하는 대신,  
+**생성(Create), 수정(Update), 삭제(Delete)** 와 같은 **변경 작업을 서버에 요청할 때** 사용하는 훅이다.
+
+useMutation은 요청할 떄 사용하기 때문에 캐싱 자체가 없다 고로 isLoading이나 isFetching의 상태는 없다 (useQuery보다 간단하다)
+
+### 예시로 서버에 무언가를 요청할 때 주로 사용된다.
+
+- 게시글 작성 (POST)
+- 유저 정보 수정 (PUT / PATCH)
+- 데이터 삭제 (DELETE)
+
+---
+
+## 문서에 나와 있는 것 간략히 정리
+
+| 항목          | 설명                             |
+| ------------- | -------------------------------- |
+| `mutationFn`  | 실제 실행할 비동기 함수 (필수)   |
+| `mutate`      | mutation 실행 트리거 (즉시 실행) |
+| `mutateAsync` | `async/await` 기반 실행          |
+| `onSuccess`   | 성공 시 실행할 콜백              |
+| `onError`     | 실패 시 실행할 콜백              |
+| `isPending`   | 요청 중 여부                     |
+| `isSuccess`   | 성공 여부                        |
+| `isError`     | 실패 여부                        |
+| `error`       | 에러 객체                        |
+
+---
+
+## 간략히 삭제 & 업데이트만 에제로 먼저 이해해보자
+
+## 1. mutation
+
+```tsx
+const deleteMutation = useMutation({
+  mutationFn: (postId) => deletePost(postId),
+});
+
+const updateMutation = useMutation({
+  mutationFn: (postId) => updatePost(postId),
+});
+```
+
+- `mutationFn`에 각 비동기 함수를 연결
+- `mutate(postId)`로 호출
+
+---
+
+## 2. UI 구성 (삭제 / 수정)
+
+```tsx
+<div>
+  <button onClick={() => deleteMutation.mutate(post.id)}>Delete</button>
+
+  {deleteMutation.isPending && (
+    <p className="loading">포스트 삭제 중입니다...</p>
+  )}
+  {deleteMutation.isError && (
+    <p className="error">{deleteMutation.error.toString()}</p>
+  )}
+  {deleteMutation.isSuccess && (
+    <p className="success">이미 삭제되었습니다</p>
+  )}
+</div>
+
+<div>
+  <button onClick={() => updateMutation.mutate(post.id)}>Update title</button>
+
+  {updateMutation.isPending && (
+    <p className="loading">포스트 업데이트 중입니다...</p>
+  )}
+  {updateMutation.isError && (
+    <p className="error">{updateMutation.error.toString()}</p>
+  )}
+  {updateMutation.isSuccess && (
+    <p className="success">제목이 업데이트 되었습니다</p>
+  )}
+</div>
+```
+
+이렇게 하면 deleteMutation를 호출 했을 때 호출되는 순서로 나타난다
+나처럼 테스트를 하는 경우엔 `deleteMutation.reset();` ,`updateMutation.reset();`으로 데이터의 상태를 초기화 시켜주자.
+동작은 포스트 삭제 중입니다...가 보여졌다가 이미 삭제되었습니다로 변경된다.
+에러가 발생했을 땐 2번에 에러가 나타날 것 이다.
+
+- 1.  포스트 삭제 중입니다...
+- 2. 이미 삭제되었습니다
+
+---
+
+## 상태값 정리
+
+| 상태값      | 설명                   |
+| ----------- | ---------------------- |
+| `isPending` | 요청 중                |
+| `isSuccess` | 요청 성공              |
+| `isError`   | 요청 실패              |
+| `error`     | 실패 시 에러 객체 반환 |
+
+정리하자면 이 상태값을 통해 사용자에게 피드백을 줄 수 있다.
