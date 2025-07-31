@@ -5,19 +5,21 @@ type Props = React.HtmlHTMLAttributes<SVGElement>;
 export const Icons = {
   logo: (props: Props) => (
     <svg
-      width={48}
-      height={48}
-      viewBox="0 0 64 64"
+      width="48"
+      height="48"
+      viewBox="0 0 200 200"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      stroke="#000"
-      strokeWidth={3}
+      stroke="#ff9800"
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
-      {...props}
+      xmlns="http://www.w3.org/2000/svg"
     >
-      <rect x={14} y={8} width={36} height={48} rx={8} ry={8} fill="#000" />
-      <path d="M20 32c4-8 8 8 12 0s8 8 12 0" stroke="#fff" strokeWidth={3} />
+      <polyline points="60,115 40,95 60,75" />
+      <polyline points="140,115 160,95 140,75" />
+      <rect x="70" y="40" width="60" height="120" rx="10" />
+      <rect x="90" y="40" width="20" height="5" rx="2" fill="#ff9800" />
+      <circle cx="100" cy="140" r="5" fill="#ff9800" stroke="none" />
     </svg>
   ),
   github: (props: Props) => (
