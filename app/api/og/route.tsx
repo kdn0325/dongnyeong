@@ -28,36 +28,27 @@ export async function GET(req: NextRequest) {
         <div tw="flex relative flex-col p-12 w-full h-full items-start text-black bg-white">
           <div tw="flex items-center">
             <svg
-              width={48}
-              height={48}
-              viewBox="0 0 64 64"
+              width="48"
+              height="48"
+              viewBox="0 0 200 200"
               fill="none"
+              stroke="#ff9800"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
               xmlns="http://www.w3.org/2000/svg"
-              stroke="#000"
-              strokeWidth={3}
-              strokeLinecap="round"
-              strokeLinejoin="round"
             >
-              <rect
-                x={14}
-                y={8}
-                width={36}
-                height={48}
-                rx={8}
-                ry={8}
-                fill="#000"
-              />
-              <path
-                d="M20 32c4-8 8 8 12 0s8 8 12 0"
-                stroke="#fff"
-                strokeWidth={3}
-              />
+              <polyline points="60,115 40,95 60,75" />
+              <polyline points="140,115 160,95 140,75" />
+              <rect x="70" y="40" width="60" height="120" rx="10" />
+              <rect x="90" y="40" width="20" height="5" rx="2" fill="#ff9800" />
+              <circle cx="100" cy="140" r="5" fill="#ff9800" stroke="none" />
             </svg>
-            <p tw="ml-2 font-bold text-2xl">dongnyeong</p>
+            <p tw="ml-2 font-bold text-2xl">{siteConfig.author}</p>
           </div>
           <div tw="flex flex-col flex-1 py-10">
             <div tw="flex text-xl uppercase font-bold tracking-tight font-normal">
-              BLOG POST
+              {siteConfig.description}
             </div>
             <div tw="flex text-[80px] font-bold text-[50px]">{heading}</div>
           </div>
