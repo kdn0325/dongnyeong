@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import GitHubCalendar from "react-github-calendar";
 
 const GithubActivity = () => {
-  const { resolvedTheme } = useTheme(); // 현재 테마 감지
+  const { resolvedTheme } = useTheme();
 
   const colorTheme = {
     light: ["#e3f2fd", "#90caf9", "#42a5f5", "#1e88e5", "#1565c0"],
