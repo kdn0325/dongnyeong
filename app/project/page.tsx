@@ -19,7 +19,6 @@ export default async function ProjectPage() {
         <h1 className="text-[2.3rem] font-medium text-[var(--txt)] pt-2">
           <strong className="text-[var(--txt-secondary)]">App</strong>
         </h1>
-        <p className="mt-4 text-left">제가 참여한 다양한 앱들을 소개합니다</p>
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pb-10">
           {app.map((props) => (
             <ProjectCard key={props.id} {...props} />
@@ -31,9 +30,6 @@ export default async function ProjectPage() {
         <h1 className="text-[2.3rem] font-medium text-[var(--txt)] pt-2">
           <strong className="text-[var(--txt-secondary)]">Open Source</strong>
         </h1>
-        <p className="mt-4 text-left">
-          GitHub에서 관리 중인 오픈소스 프로젝트들입니다.
-        </p>
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pb-10">
           {openSource.map((props) => (
             <ProjectCard key={props.id} {...props} />
