@@ -1,4 +1,4 @@
-type ProjectLink = {
+export type ProjectLink = {
   type: string;
   url: string;
 };
@@ -12,5 +12,4 @@ export interface Project {
   image_placeholder: string;
   team_project: boolean;
   technologies: string[];
-  project_links: ProjectLink[];
 }
