@@ -57,7 +57,7 @@ export async function getAllProjects(): Promise<Project[]> {
  * 특정 프로젝트 ID에 연결된 프로젝트 링크들만 조회
  */
 export async function getProjectLinks(
-  projectId: string
+  projectId: number
 ): Promise<ProjectLink[]> {
   const { data, error } = await supabase
     .from("project_links")
