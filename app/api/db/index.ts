@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import { Project } from "@/types";
+import { Project, ProjectLink } from "@/types";
 
 /**
  * 특정 타입의 프로젝트의 DB를 조회하는 함수
@@ -33,6 +33,27 @@ export async function getAllProjects(): Promise<Project[]> {
 
   if (error) {
     console.error("[getAllProjects] Error:", error);
+    return [];
+  }
+
+  return data ?? [];
+}
+
+/**
+ * 특정 프로젝트 ID에 연결된 프로젝트 링크들만 조회
+ * @param projectId 프로젝트 id
+ * @returns 프로젝트 링크 배열 또는 빈 배열
+ */
+export async function getProjectLinks(
+  projectId: string
+): Promise<ProjectLink[]> {
+  const { data, error } = await supabase
+    .from("project_links")
+    .select("type, url")
+    .eq("project_id", projectId);
+
+  if (error) {
+    console.error("[getProjectLinks] Error:", error);
     return [];
   }
 
