@@ -39,7 +39,7 @@ export default function ProjectCard({
                 style={{ objectFit: "contain", width: "300px", height: "auto" }}
                 placeholder={image_placeholder ? "blur" : undefined}
                 blurDataURL={image_placeholder}
-                priority={true}
+                priority
               />
             </div>
           ) : (
@@ -50,15 +50,17 @@ export default function ProjectCard({
                 style={{ objectFit: "contain" }}
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 700px, 900px"
                 fill
-                loading="lazy"
+                priority
               />
             </div>
           )}
         </Link>
 
         <div className="flex-1 w-full pt-5">
-          <h3 className="mb-3 text-center text-xl">{title}</h3>
-          <p className="text-justify">{description}</p>
+          <h3 className="mb-3 text-center text-xl text-[var(--txt)] ">
+            {title}
+          </h3>
+          <p className="text-justify text-[var(--txt)] ">{description}</p>
         </div>
       </div>
     </li>
