@@ -6,7 +6,7 @@ export const ProjectLinkSchema = z.object({
 });
 
 export const ProjectSchema = z.object({
-  id: z.string(),
+  id: z.number(),
   type: z.enum(["app", "openSource"]),
   title: z.string(),
   description: z.string(),
