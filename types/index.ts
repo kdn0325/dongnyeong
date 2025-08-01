@@ -4,7 +4,7 @@ export type ProjectLink = {
 };
 
 export interface Project {
-  id: string;
+  id: number;
   type: "app" | "openSource";
   title: string;
   description: string;
