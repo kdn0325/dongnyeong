@@ -33,6 +33,15 @@ export default function Nav() {
       >
         About
       </Link>
+      <Link
+        href={"/project"}
+        className={cn(
+          "text-sm font-medium transition-colors hover:text-primary hidden sm:inline",
+          pathname === "/project" ? "text-foreground" : "text-foreground/60"
+        )}
+      >
+        Project
+      </Link>
     </nav>
   );
 }
