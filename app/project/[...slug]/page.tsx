@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { getAllProjects, getProjectLinks } from "@/app/api/db";
 import Image from "next/image";
 import { ProjectLink } from "@/types";
-import TechnologyListItem from "@/components/TechnologyListItem";
-import ProjectLinkItem from "@/components/ProjectLinkItem";
+import TechnologyList from "@/components/TechnologyList";
+import ProjectLinkList from "@/components/ProjectLinkList";
 
 interface Props {
   params: Promise<{ slug: string[] }>;
@@ -85,10 +85,10 @@ export default async function ProjectDetailPage({ params }: Props) {
         </div>
 
         {technologies.length > 0 && (
-          <TechnologyListItem technologies={technologies} />
+          <TechnologyList technologies={technologies} />
         )}
 
-        {project_links.length > 0 && <ProjectLinkItem links={project_links} />}
+        {project_links.length > 0 && <ProjectLinkList links={project_links} />}
 
         {image_src && (
           <div className="relative w-full max-w-[400px] mx-auto aspect-[4/5] transition-transform duration-500 hover:scale-[1.02] hover:shadow-[0_4px_4px_5px_var(--card-shadow)]">
