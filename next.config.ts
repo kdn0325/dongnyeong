@@ -24,7 +24,12 @@ class VeliteWebpackPlugin {
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["github.com", "ko.reactjs.org", "nextjs.org"],
+    domains: [
+      "github.com",
+      "ko.reactjs.org",
+      "nextjs.org",
+      "res.cloudinary.com",
+    ],
   },
   webpack: (config) => {
     config.plugins.push(new VeliteWebpackPlugin()); // Webpack 커스텀 플러그인 등록
