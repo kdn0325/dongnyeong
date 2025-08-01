@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
-  id: string;
+  id: number;
   image_src: string;
   image_placeholder: string;
   title: string;
