@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getAllProjects } from "@/app/api/db";
+import { getAllProjects, getProjectLinks } from "@/app/api/db";
 import Image from "next/image";
+import { ProjectLink } from "@/types";
+import TechnologyListItem from "@/components/TechnologyListItem";
+import ProjectLinkItem from "@/components/ProjectLinkItem";
 
 interface Props {
   params: Promise<{ slug: string[] }>;
@@ -60,28 +63,46 @@ export default async function ProjectDetailPage({ params }: Props) {
 
   if (!project) notFound();
 
-  const { title, image_src, image_placeholder } = project;
+  const {
+    id,
+    title,
+    description,
+    image_src,
+    team_project,
+    technologies = [],
+  } = project;
+
+  const project_links: ProjectLink[] = await getProjectLinks(id);
 
   return (
     <main className="max-w-2xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
-      <p className="mb-6 text-gray-700">{project.description}</p>
+      <h1 className="text-3xl font-bold mb-4">{title}</h1>
+      <p className="mb-6 text-muted-foreground">{description}</p>
 
-      {project.image_src && (
-        <div className="w-full h-64 relative mb-6">
-          <Image
-            alt={title}
-            src={image_src}
-            width="500"
-            height="300"
-            style={{ objectFit: "contain" }}
-            placeholder={image_placeholder ? "blur" : undefined}
-            blurDataURL={image_placeholder}
-            priority={false}
-            loading="lazy"
-          />
+      <section className="space-y-6">
+        <div className="text-sm text-muted-foreground">
+          {team_project ? "👥 팀 프로젝트" : "🙋‍♂️ 개인 프로젝트"}
         </div>
-      )}
+
+        {technologies.length > 0 && (
+          <TechnologyListItem technologies={technologies} />
+        )}
+
+        {project_links.length > 0 && <ProjectLinkItem links={project_links} />}
+
+        {image_src && (
+          <div className="relative w-full max-w-[400px] mx-auto aspect-[4/5] transition-transform duration-500 hover:scale-[1.02] hover:shadow-[0_4px_4px_5px_var(--card-shadow)]">
+            <Image
+              alt={title}
+              src={image_src}
+              style={{ objectFit: "contain" }}
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 700px, 900px"
+              fill
+              loading="lazy"
+            />
+          </div>
+        )}
+      </section>
     </main>
   );
 }
