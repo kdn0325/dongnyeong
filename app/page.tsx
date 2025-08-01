@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <section className="py-16">
-        <div className="mx-auto max-w-3xl px-12 text-center">
+        <div className="mx-auto max-w-6xl px-12 text-center">
           <h1 className="text-3xl font-extrabold mb-6">
             안녕하세요! 모바일 엔지니어 김동녕 입니다.
           </h1>
@@ -44,7 +44,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="mx-auto max-w-4xl py-6 lg:py-10 flex flex-col items-center space-y-6 mt-16 px-12 sm:px-8">
+      <section className="mx-auto max-w-6xl py-6 lg:py-10 flex flex-col items-center space-y-6 mt-16 px-12 sm:px-8">
         <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black text-center">
           최근 포스트
         </h2>

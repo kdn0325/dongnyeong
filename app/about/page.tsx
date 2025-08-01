@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   return (
-    <main className="mx-auto max-w-4xl px-4 sm:px-6 md:px-12 py-10">
+    <main className="mx-auto max-w-6xl px-4 sm:px-6 md:px-12 py-10">
       <div className="mb-10">
         <h1 className="text-4xl lg:text-5xl font-black tracking-tight">
           About Me
