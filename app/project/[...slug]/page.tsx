@@ -14,7 +14,7 @@ interface Props {
 export async function generateStaticParams() {
   const projects = await getAllProjects();
   return projects.map((project) => ({
-    slug: [encodeURIComponent(project.title)],
+    slug: [project.title],
   }));
 }
 
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: project.title,
       description: project.description,
-      url: `/project/${encodeURIComponent(project.title)}`,
+      url: `/project/${project.title}`,
       images: project.image_src
         ? [
             {
