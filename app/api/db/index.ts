@@ -1,10 +1,13 @@
 import { supabase } from "@/lib/supabase";
 import { Project, ProjectLink } from "@/types";
+import {
+  ProjectsArraySchema,
+  ProjectLinksArraySchema,
+} from "@/schemas/projectSchemas";
+import { treeifyError } from "zod";
 
 /**
  * 특정 타입의 프로젝트의 DB를 조회하는 함수
- * @param type - "app" 또는 "openSource" 등 프로젝트 타입
- * @returns 해당 타입의 프로젝트 배열, 에러 시 빈 배열 반환
  */
 export async function getProjectsByType(type: string): Promise<Project[]> {
   const { data, error } = await supabase
@@ -14,35 +17,44 @@ export async function getProjectsByType(type: string): Promise<Project[]> {
     .order("id", { ascending: true });
 
   if (error) {
-    console.error("[getProjectsByType] Error:", error);
+    console.error(error);
     return [];
   }
 
-  return data ?? [];
+  const parsed = ProjectsArraySchema.safeParse(data);
+  if (!parsed.success) {
+    console.error(treeifyError(parsed.error));
+    return [];
+  }
+
+  return parsed.data;
 }
 
 /**
  * 모든 프로젝트 DB를 조회하는 함수
- * @returns 모든 프로젝트 배열
  */
 export async function getAllProjects(): Promise<Project[]> {
   const { data, error } = await supabase
     .from("projects")
-    .select() // 필요한 필드들
+    .select()
     .order("id", { ascending: true });
 
   if (error) {
-    console.error("[getAllProjects] Error:", error);
+    console.error(error);
     return [];
   }
 
-  return data ?? [];
+  const parsed = ProjectsArraySchema.safeParse(data);
+  if (!parsed.success) {
+    console.error(treeifyError(parsed.error));
+    return [];
+  }
+
+  return parsed.data;
 }
 
 /**
  * 특정 프로젝트 ID에 연결된 프로젝트 링크들만 조회
- * @param projectId 프로젝트 id
- * @returns 프로젝트 링크 배열 또는 빈 배열
  */
 export async function getProjectLinks(
   projectId: string
@@ -53,9 +65,15 @@ export async function getProjectLinks(
     .eq("project_id", projectId);
 
   if (error) {
-    console.error("[getProjectLinks] Error:", error);
+    console.error(error);
     return [];
   }
 
-  return data ?? [];
+  const parsed = ProjectLinksArraySchema.safeParse(data);
+  if (!parsed.success) {
+    console.error(treeifyError(parsed.error));
+    return [];
+  }
+
+  return parsed.data;
 }
