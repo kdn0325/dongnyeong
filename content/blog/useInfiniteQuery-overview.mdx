@@ -1,0 +1,109 @@
+---
+title: useInfiniteQuery 알아 보기
+description: useInfiniteQuery를 학습해보자
+date: 2025-08-04
+published: true
+tags: ["ts", "typescript", "react-query", "infinite-scroll", "tanstack"]
+---
+
+## `useInfiniteQuery`
+
+무한 스크롤 구현을 하다 보면, 데이터를 페이지 단위로 나누고, 스크롤이 끝에 닿을 때마다 다음 데이터를 불러오는 흐름을 구현하게 된다.
+유용하게 사용할 수 있는 도구가 바로 **React Query의 `useInfiniteQuery`**이다
+
+---
+
+`useInfiniteQuery`는 `@tanstack/react-query`에서 제공하는 훅으로, **페이징 또는 커서 기반의 데이터**를 쉽게 구현 할 수 있게 해준다.
+
+```tsx
+const {
+  data,
+  isLoading,
+  isError,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+} = useInfiniteQuery({
+  queryKey: ["my-query-key"],
+  queryFn: ({ pageParam = initialValue }) => fetchFunction(pageParam),
+  getNextPageParam: (lastPage, allPages) => nextPageParam,
+});
+```
+
+---
+
+## 옵션 알아보기
+
+| 옵션명             | 설명                                                                                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `queryKey`         | 쿼리의 고유 키 (캐싱/리페치 구분용)                                                                                                              |
+| `queryFn`          | 데이터를 실제로 패칭하는 함수, `pageParam`으로 현재 페이지 정보를 받음                                                                           |
+| `getNextPageParam` | 다음 페이지 호출에 사용할 `pageParam`을 반환하는 함수 , 데이터를 받은 후 getNextPageParam을 실행하고 추가로 가져올 데이터가 있는지 판별하는 옵션 |
+| `initialPageParam` | 최초에 사용할 `pageParam`의 초기값 (기본은 undefined)                                                                                            |
+
+---
+
+## 🧪 예제: Star Wars API로 무한 스크롤 구현하기
+
+```tsx
+import { useInfiniteQuery } from "@tanstack/react-query";
+
+const fetchUrl = async (url) => {
+  const res = await fetch(url);
+  return res.json();
+};
+
+const initialUrl = "https://swapi.py4e.com/api/species/";
+
+const { data, isLoading, isError, isFetching, fetchNextPage } =
+  useInfiniteQuery({
+    queryKey: ["sw-species"],
+    queryFn: ({ pageParam = initialUrl }) => fetchUrl(pageParam),
+    getNextPageParam: (lastPage) => lastPage.next || undefined,
+  });
+```
+
+### Flow:
+
+1. `pageParam`이 없을 경우 `initialUrl`로 첫 fetch 실행
+2. 응답 결과에 있는 `next` 값을 `getNextPageParam`이 추출
+3. `fetchNextPage()` 호출 시, `next`를 `pageParam`으로 넘겨 다음 데이터를 요청
+
+---
+
+### useInfiniteQuery를 사용할 땐 첫 페이지 자동 호출 옵션이 켜져 있는지 꼭 확인하자.
+
+`react-infinite-scroller`나 유사 라이브러리와 함께 사용할 경우, `useInfiniteQuery`가 첫 페이지를 자동 호출하고 `InfiniteScroll`도 `initialLoad`로 호출해 **두 번 호출**되는 문제가 있다. 따라서 useInfiniteQuery를 사용할땐 초기 호출되는 함수를 막아서 사용하자.
+
+```tsx
+<InfiniteScroll
+  // InfiniteScroll 라이브러리 작동 방식은 데이터의 첫 페이지를 자동으로 호출한다 그래서 초기 호출을 막아줬다
+  initialLoad={false}
+  loadMore={() => {
+    if (!isFetching) {
+      fetchNextPage();
+    }
+  }}
+  hasMore={!!data?.pages[data.pages.length - 1]?.next}
+/>
+```
+
+---
+
+## 정리
+
+| 장점                                      | 설명                                             |
+| ----------------------------------------- | ------------------------------------------------ |
+| 페이징 API와 궁합이 좋음                  | REST API뿐 아니라 커서 기반 API에도 적합         |
+| 캐싱 & 상태 관리 내장                     | 기존 페이지 데이터 유지하면서 새로 불러오기 가능 |
+| `getNextPageParam`으로 유연한 페이징 가능 | 숫자 기반, 커서 기반 모두 구현 가능              |
+
+---
+
+## 언제 사용해야 할까?
+
+- 페이지 단위 데이터를 불러오고 싶을 때 (서버 데이터에선 page로 불러오는 데이터가 많기 때문에 자주 사용한다.)
+- 무한 스크롤 UX가 필요한 앱 (게시판, 피드, 상품 목록 등)
+- 커서 기반 API와 연동할 때 (예: Supabase, Firebase, GraphQL 등)
+
+---
